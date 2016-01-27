@@ -6,5 +6,5 @@ This is the core image based on Oracle Linux which is used for all other Oracle 
 
 The following packages are the standard-set of tools available:
 
-* VIM
-* TMUX
+* wget
+* tar

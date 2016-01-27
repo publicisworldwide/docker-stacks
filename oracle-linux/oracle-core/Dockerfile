@@ -6,17 +6,17 @@ MAINTAINER Publicis Worldwide
 USER root
 
 # configure environment
-ENV CON_USER lion
-ENV CON_UID 1000
+ENV CONTAINER_USER lion
+ENV CONTAINER_UID 1000
 
 # create lion user with UID=1000
-RUN useradd -m -s /bin/bash -N -u $CON_UID $CON_USER
+RUN useradd -m -s /bin/bash -N -u $CONTAINER_UID $CONTAINER_USER
 
 # install standard packages
 RUN yum install -y \
-    tmux \
-    vim && \
+    wget \
+    tar && \
     yum clean all
 
 # run container as lion
-USER lion
+USER $CONTAINER_UID
