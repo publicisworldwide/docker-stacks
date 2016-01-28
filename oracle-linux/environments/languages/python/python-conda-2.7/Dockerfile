@@ -21,6 +21,10 @@ USER $CONTAINER_USER
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh && \
-    echo "628f158791daf7d634fb6894045a6be1 *Miniconda-latest-Linux-x86_64.sh" | md5sum -c - && \
+    echo $(wget --quiet -O - https://repo.continuum.io/miniconda/ \
+       | grep -A3 "Miniconda-latest-Linux-x86_64.sh" \
+       | tail -n1 \
+       | cut -d\> -f2 \
+       | cut -d\< -f1 ) "Miniconda-latest-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda-latest-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda-latest-Linux-x86_64.sh
