@@ -8,3 +8,5 @@ The following packages are the standard-set of tools available:
 
 * wget
 * tar
+* bzip2
+* unzip

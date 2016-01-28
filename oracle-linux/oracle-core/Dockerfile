@@ -15,6 +15,8 @@ RUN useradd -m -s /bin/bash -N -u $CONTAINER_UID $CONTAINER_USER
 # install standard packages
 RUN yum install -y \
     wget \
+    bzip2 \
+    unzip \
     tar && \
     yum clean all
 
