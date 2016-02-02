@@ -9,3 +9,9 @@ If you're familiar with Docker, have it configured, and know exactly what you'd 
 ```
 docker run -d -P publicisworldwide/<your desired stack>
 ```
+
+## pastebin
+Clean up your local registry (only <none>/<none>)
+```
+docker rmi `docker images | grep '^<none>' | awk '{print $3}'`
+```
