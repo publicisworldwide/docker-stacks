@@ -11,7 +11,7 @@ docker run -d -P publicisworldwide/<your desired stack>
 ```
 
 ## pastebin
-Clean up your local registry (only <none>/<none>)
+Clean up your local registry (only <none>)
 ```
 docker rmi `docker images | grep '^<none>' | awk '{print $3}'`
 ```
