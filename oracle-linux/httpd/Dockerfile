@@ -9,13 +9,14 @@ RUN yum install -y \
     httpd
 RUN yum clean all
 
-RUN rm -rf /var/www
-RUN rm -f /etc/httpd/conf.d/*
-RUN mkdir -p /var/www/html
-
+RUN rm -rf /var/www \
+    && rm -f /etc/httpd/conf.d/* \
+    && rm -f /etc/httpd/conf.modules.d/* \
+    && mkdir -p /var/www/html
 ADD config/httpd.conf /etc/httpd/conf/
-ADD run-httpd.sh /usr/local/bin/
-RUN chmod -v +x /usr/local/bin/run-httpd.sh
 
 EXPOSE 80
+
+ADD run-httpd.sh /usr/local/bin/
+RUN chmod -v +x /usr/local/bin/run-httpd.sh
 CMD ["run-httpd.sh"]
