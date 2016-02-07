@@ -1,4 +1,4 @@
-# @todo apache härten
+# @todo apache härten und eigene configs benutzen
 FROM publicisworldwide/oracle-core:latest
 MAINTAINER Publicis Worldwide
 
@@ -12,10 +12,9 @@ RUN rm -rf /var/www && \
     rm -rf /usr/share/httpd
 #    && rm -f /etc/httpd/conf.d/* \
 #    && rm -f /etc/httpd/conf.modules.d/* \
-#ADD etc/httpd/conf/httpd.conf /etc/httpd/conf/
+ADD etc/httpd/conf/httpd.conf /etc/httpd/conf/
 
 EXPOSE 80
-EXPOSE 443
 
 ADD run-httpd.sh /usr/local/bin/
 RUN chmod -v +x /usr/local/bin/run-httpd.sh
