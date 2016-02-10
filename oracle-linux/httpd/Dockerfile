@@ -1,4 +1,5 @@
-# @todo apache härten und eigene configs benutzen
+# @todo apache hardening
+# @todo use custom configs
 FROM publicisworldwide/oracle-core:latest
 MAINTAINER Publicis Worldwide
 
