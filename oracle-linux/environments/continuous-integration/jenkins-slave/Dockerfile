@@ -1,4 +1,4 @@
-FROM oraclelinux:7
+FROM publicisworldwide/jenkins-slave
 MAINTAINER publicisworldwide heichblatt
 
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
