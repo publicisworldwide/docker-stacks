@@ -10,6 +10,7 @@ ENV CONDA_DIR /opt/conda
 ENV PATH $CONDA_DIR/bin:$PATH
 ENV CONTAINER_USER lion
 ENV CONTAINER_UID 1000
+ENV INSTALLER Miniconda2-latest-Linux-x86_64.sh
 
 # create conda directory for lion user
 RUN mkdir -p /opt/conda && \
@@ -20,11 +21,11 @@ USER $CONTAINER_USER
 # install conda with python 2.7
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh && \
+    wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh && \
     echo $(wget --quiet -O - https://repo.continuum.io/miniconda/ \
-       | grep -A3 "Miniconda-latest-Linux-x86_64.sh" \
+       | grep -A3 $INSTALLER \
        | tail -n1 \
        | cut -d\> -f2 \
-       | cut -d\< -f1 ) "Miniconda-latest-Linux-x86_64.sh" | md5sum -c - && \
-    /bin/bash Miniconda-latest-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda-latest-Linux-x86_64.sh
+       | cut -d\< -f1 ) $INSTALLER | md5sum -c - && \
+    /bin/bash $INSTALLER -f -b -p $CONDA_DIR && \
+    rm $INSTALLER
