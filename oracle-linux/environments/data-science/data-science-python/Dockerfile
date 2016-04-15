@@ -39,8 +39,7 @@ WORKDIR /home/$CONTAINER_USER/work
 
 ENV TINI_VERSION v0.9.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN echo "faafbfb5b079303691a939a747d7f60591f2143164093727e870b289a44d9872 *tini" | sha256sum -c - && \
-    chmod +x /tini
+RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
 CMD ["/usr/local/bin/start-jupyter.sh"]
