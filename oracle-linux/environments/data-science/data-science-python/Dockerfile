@@ -36,8 +36,14 @@ USER root
 # configure container startup as root
 EXPOSE 8888
 WORKDIR /home/$CONTAINER_USER/work
-ENTRYPOINT ["/usr/local/bin/start-jupyter.sh"]
 
+ENV TINI_VERSION v0.9.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN echo "faafbfb5b079303691a939a747d7f60591f2143164093727e870b289a44d9872 *tini" | sha256sum -c - && \
+    chmod +x /tini
+ENTRYPOINT ["/tini", "--"]
+
+CMD ["/usr/local/bin/start-jupyter.sh"]
 # adding local files
 COPY start-jupyter.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /home/$CONTAINER_USER/.jupyter/

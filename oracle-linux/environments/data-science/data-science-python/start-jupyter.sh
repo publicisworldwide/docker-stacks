@@ -2,8 +2,8 @@
 
 # Handle special flags if we're root
 if [ $UID == 0 ] ; then
-    # Change UID of NB_USER to NB_UID if it does not match
-    if [ "$CONTAINER_UID" != $(id -u $NB_USER) ] ; then
+    # Change UID of CONTAINER_USER to CONTAINER _UID if it does not match
+    if [ "$CONTAINER_UID" != $(id -u $CONTAINER_USER) ] ; then
         usermod -u $CONTAINER_UID $CONTAINER_USER
         chown -R $CONTAINER_UID $CONDA_DIR
     fi
