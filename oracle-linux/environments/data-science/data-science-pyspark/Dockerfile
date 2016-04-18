@@ -33,6 +33,17 @@ RUN /usr/bin/curl --output ${SPARK_BASE}/${SPARK_TARBALL} ${SPARK_URL} && \
     /usr/bin/tar xf ${SPARK_BASE}/${SPARK_TARBALL} -C ${SPARK_BASE} && \
     /usr/bin/rm -v ${SPARK_BASE}/${SPARK_TARBALL}
 
+# sparkling water dependencies
+ENV SPARKLING_ZIP sparkling-water-1.5.12.zip
+ENV SPARKLING_URL http://h2o-release.s3.amazonaws.com/sparkling-water/rel-1.5/12/sparkling-water-1.5.12.zip
+ENV SPARKLING_BASE /opt/sparkling-water
+ENV SPARKLING_HOME $(SPARKLING_BASE)/sparkling-water-1.5.12
+
+RUN /usr/bin/mkdir -pv ${SPARKLING_BASE}
+RUN /usr/bin/curl --output ${SPARKLING_BASE}/${SPARKLING_ZIP} ${SPARKLING_URL} && \
+    /usr/bin/unzip ${SPARKLING_BASE}/${SPARKLING_ZIP} -d ${SPARKLING_BASE} && \
+    /usr/bin/rm -v ${SPARKLING_BASE}/${SPARKLING_ZIP}
+
 USER $CONTAINER_USER
 
 # modify home directory
@@ -47,8 +58,10 @@ RUN conda install --yes \
     'matplotlib=1.4*' \
     'seaborn=0.6*' \
     'notebook=4.1*' \
+    future \
     terminado \
     pyzmq \
+    && conda install --yes -c https://conda.anaconda.org/auto tabulate \
     && conda clean -yt
 
 USER root
