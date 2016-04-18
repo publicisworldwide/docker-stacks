@@ -10,6 +10,29 @@ RUN yum install -y \
     sudo && \
     yum clean all
 
+
+# mesos dependencies
+RUN /usr/bin/yum install -y http://repos.mesosphere.io/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm && \
+    /usr/bin/yum clean all
+RUN /usr/bin/yum install -y mesos && \
+    /usr/bin/yum clean all
+
+ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
+
+# spark dependencies
+ENV SPARK_TARBALL spark-1.5.1-bin-hadoop2.6.tgz
+ENV SPARK_URL http://d3kbcqa49mib13.cloudfront.net/${SPARK_TARBALL}
+ENV SPARK_BASE /opt/spark
+ENV SPARK_HOME ${SPARK_BASE}/spark-1.5.1-bin-hadoop2.6
+ENV PYTHONPATH ${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-0.8.2.1-src.zip
+
+RUN yum install -y java-1.7.0-openjdk tar && \
+    yum clean all
+RUN /usr/bin/mkdir -pv ${SPARK_BASE}
+RUN /usr/bin/curl --output ${SPARK_BASE}/${SPARK_TARBALL} ${SPARK_URL} && \
+    /usr/bin/tar xf ${SPARK_BASE}/${SPARK_TARBALL} -C ${SPARK_BASE} && \
+    /usr/bin/rm -v ${SPARK_BASE}/${SPARK_TARBALL}
+
 USER $CONTAINER_USER
 
 # modify home directory
@@ -21,11 +44,8 @@ RUN mkdir /home/$CONTAINER_USER/work && \
 RUN conda install --yes \
     'ipython=4.0*' \
     'ipywidgets=4.0*' \
-    'pandas=0.17*' \
     'matplotlib=1.4*' \
-    'scipy=0.16*' \
     'seaborn=0.6*' \
-    'scikit-learn=0.16*' \
     'notebook=4.1*' \
     terminado \
     pyzmq \
