@@ -17,5 +17,8 @@ if [ $UID == 0 ] ; then
     exec su $CONTAINER_USER -c "env PATH=$PATH jupyter notebook $*"
 else
     # Otherwise just exec the notebook
+    if [ ! -z "$PROJECT_DIRECTORY" ]; then
+        cd "$PROJECT_DIRECTORY"
+    fi
     exec jupyter notebook $*
 fi
