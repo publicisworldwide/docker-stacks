@@ -1,0 +1,48 @@
+---
+redismaster1:
+  image: 'redis-cluster'
+  environment:
+    REDIS_PORT: '7000'
+  ports:
+    - '7000:7000'
+    - '17000:17000'
+
+redismaster2:
+  image: 'redis-cluster'
+  environment:
+    REDIS_PORT: '7001'
+  ports:
+    - '7001:7001'
+    - '17001:17001'
+
+redismaster3:
+  image: 'redis-cluster'
+  environment:
+    REDIS_PORT: '7002'
+  ports:
+    - '7002:7002'
+    - '17002:17002'
+
+redisslave1:
+  image: 'redis-cluster'
+  environment:
+    REDIS_PORT: '7003'
+  ports:
+    - '7003:7003'
+    - '17003:17003'
+
+redisslave2:
+  image: 'redis-cluster'
+  environment:
+    REDIS_PORT: '7004'
+  ports:
+    - '7004:7004'
+    - '17004:17004'
+
+redisslave3:
+  image: 'redis-cluster'
+  environment:
+    REDIS_PORT: '7005'
+  ports:
+    - '7005:7005'
+    - '17005:17005'
