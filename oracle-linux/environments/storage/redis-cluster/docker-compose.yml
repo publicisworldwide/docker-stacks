@@ -1,6 +1,6 @@
 ---
 redismaster1:
-  image: 'redis-cluster'
+  image: 'publicisworldwide/redis-cluster'
   environment:
     REDIS_PORT: '7000'
   ports:
@@ -8,7 +8,7 @@ redismaster1:
     - '17000:17000'
 
 redismaster2:
-  image: 'redis-cluster'
+  image: 'publicisworldwide/redis-cluster'
   environment:
     REDIS_PORT: '7001'
   ports:
@@ -16,7 +16,7 @@ redismaster2:
     - '17001:17001'
 
 redismaster3:
-  image: 'redis-cluster'
+  image: 'publicisworldwide/redis-cluster'
   environment:
     REDIS_PORT: '7002'
   ports:
@@ -24,7 +24,7 @@ redismaster3:
     - '17002:17002'
 
 redisslave1:
-  image: 'redis-cluster'
+  image: 'publicisworldwide/redis-cluster'
   environment:
     REDIS_PORT: '7003'
   ports:
@@ -32,7 +32,7 @@ redisslave1:
     - '17003:17003'
 
 redisslave2:
-  image: 'redis-cluster'
+  image: 'publicisworldwide/redis-cluster'
   environment:
     REDIS_PORT: '7004'
   ports:
@@ -40,7 +40,7 @@ redisslave2:
     - '17004:17004'
 
 redisslave3:
-  image: 'redis-cluster'
+  image: 'publicisworldwide/redis-cluster'
   environment:
     REDIS_PORT: '7005'
   ports:
