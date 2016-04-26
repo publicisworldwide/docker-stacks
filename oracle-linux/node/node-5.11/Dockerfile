@@ -2,7 +2,7 @@ FROM publicisworldwide/oracle-core
 
 MAINTAINER Publicis Worldwide
 
-USER root
+USER $CONTAINER_USER
 
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
@@ -22,14 +22,18 @@ RUN set -ex \
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 5.11.0
 
+RUN mkdir /home/$CONTAINER_USER/.npm-global
+
 RUN cd /tmp \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
   && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
   && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
-  && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
+  && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /home/$CONTAINER_USER/.npm-global --strip-components=1 \
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt
 
-USER $CONTAINER_USER
+ENV PATH /home/$CONTAINER_USER/.npm-global/bin:$PATH
+
+RUN npm config set prefix /home/$CONTAINER_USER/.npm-global
 
 CMD [ "node" ]
