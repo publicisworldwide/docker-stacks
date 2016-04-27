@@ -1,4 +1,4 @@
-FROM publicisworldwide/node:5.11
+FROM dennis-node
 
 MAINTAINER Publicis Worldwide
 
