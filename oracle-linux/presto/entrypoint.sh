@@ -15,8 +15,9 @@ else
 	mv ./etc/config_testing.properties ./etc/config.properties
 fi 
 
-# set the discovery.uri
+# set the discovery.uri & port
 echo discovery.uri=$DISCOVERY_URI >> ./etc/config.properties
+echo http-server.http.port=$HTTP_PORT >> ./etc/config.properties
 
 # create the node.properties
 echo node.environment=$NODE_ENVIRONMENT > ./etc/node.properties
