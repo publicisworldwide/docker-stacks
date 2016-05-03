@@ -1,0 +1,25 @@
+---
+version: '2'
+services:
+  coordinator:
+    image: 'presto'
+    ports:
+      - "44444:44444"
+    environment:
+      PRESTO_MODE: 'coordinator'
+      DISCOVERY_URI: 'http://coordinator:44444'
+      NODE_ENVIRONMENT: 'testing'
+      NODE_DATA_DIR: '/tmp/presto-data'
+  worker:
+    image: 'presto'
+    ports:
+      - "44444"
+    depends_on:
+      - 'coordinator'
+    links:
+      - 'coordinator'
+    environment:
+      PRESTO_MODE: 'worker'
+      DISCOVERY_URI: 'http://coordinator:44444'
+      NODE_ENVIRONMENT: 'testing'
+      NODE_DATA_DIR: '/tmp/presto-data'
