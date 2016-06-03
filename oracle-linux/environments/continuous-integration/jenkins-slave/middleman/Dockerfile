@@ -3,7 +3,7 @@ MAINTAINER publicisworldwide heichblatt
 
 ENV node_version v6.0.0
 
-RUN /usr/bin/yum install -y which tar yum-utils yum-plugin-ovl
+RUN /usr/bin/yum install -y which tar yum-utils
 RUN yum-config-manager --enable ol7_optional_latest
 RUN /usr/bin/yum install -y libyaml-devel
 RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 && \
