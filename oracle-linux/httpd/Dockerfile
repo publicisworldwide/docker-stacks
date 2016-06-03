@@ -5,6 +5,10 @@ MAINTAINER Publicis Worldwide
 
 USER root
 
+# TODO: this fixes docker/docker#10180
+RUN yum install -y yum-plugin-ovl && \
+    yum clean all
+
 RUN yum install -y httpd  && \
     yum clean all
 
