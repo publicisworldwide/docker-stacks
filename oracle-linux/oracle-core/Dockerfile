@@ -18,7 +18,8 @@ RUN /bin/yum install -y \
     bzip2 \
     unzip \
     tar \
-    sudo && \
+    sudo \
+    yum-plugin-ovl && \ # TODO: this fixes docker/docker#10180
     yum clean all
 
 # allow passwordless sudo for user lion
