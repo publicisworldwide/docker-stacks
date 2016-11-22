@@ -20,7 +20,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 6.2.0
+ENV NODE_VERSION 6.2.2
 
 RUN mkdir /home/$CONTAINER_USER/.npm-global
 
