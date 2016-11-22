@@ -1,0 +1,57 @@
+#!/bin/sh
+
+#
+# chkconfig: 35 99 99
+# description: Script for starting httpd.
+#
+
+. /etc/rc.d/init.d/functions
+
+USER="apache"
+LOG_FILE="/var/log/httpd/daemon_log"
+
+do_start()
+{
+        echo -n $"Starting Apache httpd : "
+        source /etc/sysconfig/httpd
+        ( /usr/sbin/httpd -DFOREGROUND >> "$LOG_FILE" 2>&1 & ) && echo_success || echo_failure
+        RETVAL=$?
+	echo
+        [ $RETVAL -eq 0 ]
+}
+
+do_stop()
+{
+        echo -n $"Stopping MariaDB : "
+        pid=$(cat /var/run/mariadb/mariadb.pid)
+        kill -9 $pid > /dev/null 2>&1 && echo_success || echo_failure
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ]
+}
+
+do_status()
+{
+        ps --no-headers -u "$USER"
+}
+
+case "$1" in
+        start)
+                do_start
+                ;;
+        stop)
+                do_stop
+                ;;
+        restart)
+                do_stop
+                do_start
+                ;;
+        status)
+                do_status
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart|status}"
+                RETVAL=1
+esac
+
+exit $RETVAL
