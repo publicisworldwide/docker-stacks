@@ -14,7 +14,8 @@ RUN yum install -y \
 # mesos dependencies
 RUN /usr/bin/yum install -y http://repos.mesosphere.io/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm && \
     /usr/bin/yum clean all
-RUN /usr/bin/yum install -y mesos && \
+RUN /usr/bin/yum-config-manager --enable ol7_optional_latest && \
+    /usr/bin/yum install -y mesos && \
     /usr/bin/yum clean all
 
 ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
