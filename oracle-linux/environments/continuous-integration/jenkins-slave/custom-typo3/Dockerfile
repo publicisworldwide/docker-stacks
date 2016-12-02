@@ -4,6 +4,7 @@ MAINTAINER "Heiko Hardt" <heiko.hardt@publicispixelpark.de>
 ENV container docker
 ENV version_phantomjs 2.1.1
 ENV version_selenium 2.53.0
+ENV SYSTEMCTL_SKIP_REDIRECT foo
 
 ##########################################################################
 ## publicis standard setup
