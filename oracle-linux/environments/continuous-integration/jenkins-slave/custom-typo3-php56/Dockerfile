@@ -112,6 +112,14 @@ COPY /conf.files/etc/php.d/* /etc/php.d/
 RUN yum install -y composer && \
     yum clean all
 
+# Prepare environment
+RUN mkdir -p /jenkins.workspace/dir-project && \
+    mkdir -p /jenkins.workspace/dir-ci && \
+    mkdir -p /jenkins.workspace/dir-architecture && \
+    mkdir -p /jenkins.workspace/dir-tools && \
+    chmod -R 777 /jenkins.workspace
+
+
 ##########################################################################
 ## init scripts
 
