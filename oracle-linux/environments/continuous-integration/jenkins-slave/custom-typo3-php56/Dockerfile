@@ -7,6 +7,7 @@ ENV version_selenium 2.53.1
 ENV version_firefox 46.0.1
 ENV SYSTEMCTL_SKIP_REDIRECT foo
 
+
 ##########################################################################
 ## publicis standard setup
 
@@ -38,6 +39,7 @@ RUN yum-config-manager --enable ol7_optional_latest && \
     gem install compass && \
     yum clean all
 
+
 ##########################################################################
 ## acceptance test tools
 
@@ -64,11 +66,15 @@ RUN cd /opt && \
 
 # Phantomjs
 RUN cd /opt && \
+    # get and extract binaries
     wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${version_phantomjs}-linux-x86_64.tar.bz2 && \
     tar xvjf phantomjs-${version_phantomjs}-linux-x86_64.tar.bz2 && \
     rm -Rf phantomjs-${version_phantomjs}-linux-x86_64.tar.bz2 && \
+    # setup logdir
     mkdir -p /var/log/phantomjs && \
+    # setup symlink
     ln -s /opt/phantomjs-${version_phantomjs}-linux-x86_64/bin/phantomjs /usr/local/bin && \
+    # adjust permissions
     chmod +x /usr/local/bin/phantomjs && \
     chown -R screener:screener /opt/phantomjs-${version_phantomjs}-linux-x86_64 && \
     chown -R screener:screener /usr/local/bin/phantomjs && \
@@ -76,12 +82,16 @@ RUN cd /opt && \
 
 # Selenium
 RUN version_selenium_short=$(echo ${version_selenium} | cut -d\. -f1-2) && \
+    # get binaries
     mkdir -p /opt/selenium-server && \
     cd /opt/selenium-server && \
     wget https://selenium-release.storage.googleapis.com/${version_selenium_short}/selenium-server-standalone-${version_selenium}.jar && \
+    # setup logdir
     mkdir -p /var/log/selenium-server && \
+    # adjust permissions
     chown -R screener:screener /opt/selenium-server && \
     chown -R screener:screener /var/log/selenium-server
+
 
 ##########################################################################
 ## web environment
