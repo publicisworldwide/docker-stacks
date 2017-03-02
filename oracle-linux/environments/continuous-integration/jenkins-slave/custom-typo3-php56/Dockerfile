@@ -106,6 +106,8 @@ RUN yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm &
     yum install -y php php-mysql php-gd php-opcache php-mbstring php-xdebug && \
     yum clean all
 
+COPY /conf.files/etc/php.d/* /etc/php.d/
+
 # Setup composer
 RUN yum install -y composer && \
     yum clean all
