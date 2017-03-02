@@ -92,6 +92,13 @@ RUN version_selenium_short=$(echo ${version_selenium} | cut -d\. -f1-2) && \
 RUN yum install -y httpd  mariadb-server mariadb && \
     yum clean all
 
+# Prepare behat document root
+RUN mkdir -p /var/www/behat && \
+    chown apache:apache /var/www/behat && \
+    chmod 2777 /var/www/behat
+
+COPY /conf.files/etc/httpd/conf.d/* /etc/httpd/conf.d/
+
 # Setup php
 RUN yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm && \
     yum install -y yum-utils && \
