@@ -45,6 +45,9 @@ RUN yum-config-manager --enable ol7_optional_latest && \
 RUN yum install -y tree make which curl GraphicsMagick ghostscript && \
     yum clean all
 
+# Acceptance user
+RUN adduser screener
+
 # Phantomjs
 RUN cd /opt && \
     wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${version_phantomjs}-linux-x86_64.tar.bz2 && \
@@ -55,7 +58,6 @@ RUN cd /opt && \
 
 # Prepare Selenium & Firefox headless environment
 RUN version_selenium_short=$(echo ${version_selenium} | cut -d\. -f1-2) && \
-    adduser screener && \
     yum install -y links xorg-x11-server-Xvfb firefox dconf dconf-editor && \
     mkdir -p /opt/selenium-server && \
     cd /opt/selenium-server && \
