@@ -110,7 +110,7 @@ COPY /conf.files/etc/httpd/conf.d/* /etc/httpd/conf.d/
 # Setup php
 RUN yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm && \
     yum install -y yum-utils && \
-    yum-config-manager --enable remi-php56 && \
+    yum-config-manager --enable remi-php70 && \
     yum install -y php php-mysql php-gd php-opcache php-mbstring php-xdebug && \
     yum clean all
 
