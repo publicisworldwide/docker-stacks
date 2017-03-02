@@ -18,7 +18,7 @@ This Dockerfile provide the following services:
   * php 5.6 (apache module)
 
 ## Build (example)
-`docker build --rm -t publicisworldwide/jenkins-slave:custom-typo3 .`
+`docker build --rm -t publicisworldwide/jenkins-slave:custom-typo3-php56 .`
 
 ## Run (example)
-`docker run -d publicisworldwide/jenkins-slave:custom-typo3`
+`docker run -d publicisworldwide/jenkins-slave:custom-typo3-php56`
