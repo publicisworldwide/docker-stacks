@@ -11,12 +11,10 @@ ENV SYSTEMCTL_SKIP_REDIRECT foo
 ## publicis standard setup
 
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
-      bzip2 \
-      java-1.7.0-openjdk \
-      git \
-      wget \
-      pv \
-      @development && \
+        bzip2 \
+        git \
+        wget \
+        java-1.8.0-openjdk \
     yum clean all
 
 RUN mkdir -pv /jenkins
