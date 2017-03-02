@@ -68,21 +68,22 @@ RUN cd /opt && \
 RUN cd /opt && \
     wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${version_phantomjs}-linux-x86_64.tar.bz2 && \
     tar xvjf phantomjs-${version_phantomjs}-linux-x86_64.tar.bz2 && \
+    rm -Rf phantomjs-${version_phantomjs}-linux-x86_64.tar.bz2 && \
+    mkdir -p /var/log/phantomjs && \
     ln -s /opt/phantomjs-${version_phantomjs}-linux-x86_64/bin/phantomjs /usr/local/bin && \
     chmod +x /usr/local/bin/phantomjs && \
-    rm -Rf phantomjs-${version_phantomjs}-linux-x86_64.tar.bz2
+    chown -R screener:screener /opt/phantomjs-${version_phantomjs}-linux-x86_64 && \
+    chown -R screener:screener /usr/local/bin/phantomjs && \
+    chown -R screener:screener /var/log/phantomjs
 
-# Prepare Selenium & Firefox headless environment
+# Selenium
 RUN version_selenium_short=$(echo ${version_selenium} | cut -d\. -f1-2) && \
     mkdir -p /opt/selenium-server && \
     cd /opt/selenium-server && \
     wget https://selenium-release.storage.googleapis.com/${version_selenium_short}/selenium-server-standalone-${version_selenium}.jar && \
     mkdir -p /var/log/selenium-server && \
-    mkdir -p /var/log/phantomjs && \
     chown -R screener:screener /opt/selenium-server && \
-    chown -R screener:screener /usr/local/bin/phantomjs && \
-    chown -R screener:screener /var/log/selenium-server && \
-    chown -R screener:screener /var/log/phantomjs
+    chown -R screener:screener /var/log/selenium-server
 
 ##########################################################################
 ## web environment
