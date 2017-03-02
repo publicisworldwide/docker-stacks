@@ -1,48 +1,77 @@
-#!/bin/sh
-
+#!/bin/bash
 #
-# chkconfig: 35 99 99
-# description: Script for starting phantomjs.
+# chkconfig:   - 85 15
+# description: phantomjs
+# processname: phantomjs
 #
 
-. /etc/rc.d/init.d/functions
+# service
+service="phantomjs"
 
-USER="screener"
-DAEMON="/usr/local/bin/phantomjs --webdriver=8643"
-LOG_FILE="/var/log/phantomjs/main.log"
+# logfiles
+std_log=/var/log/phantomjs/phantomjs_std.log
+err_log=/var/log/phantomjs/phantomjs_error.log
 
-do_start()
-{
-        echo -n $"Starting PhantomJS : "
-        runuser -l "$USER" -c "$DAEMON >> $LOG_FILE &" && echo_success || echo_failure
-        RETVAL=$?
-	echo
-        [ $RETVAL -eq 0 ]
+# binaries & options
+binary="/usr/local/bin/phantomjs"
+option="--webdriver=8643"
+
+# run as
+user="screener"
+
+# process-id
+PID=""
+
+updatepid(){
+    PID=$(ps -C phantomjs -o pid,cmd | grep $binary | awk {'print $1'})
+    echo "$binary (PID:$PID)"
 }
-do_stop()
-{
-        echo -n $"Stopping PhantomJS : "
-        pid=`ps -aefw | grep "$DAEMON" | grep -v " grep " | awk '{print $2}'`
-        kill -9 $pid > /dev/null 2>&1 && echo_success || echo_failure
-        RETVAL=$?
-        echo
-        [ $RETVAL -eq 0 ]
+
+start() {
+    updatepid
+    if [ ! -z $PID ] ; then
+        echo "$service is already running."
+        exit 1
+    else
+        su $user -c "$binary $option >$std_log 2>$err_log &"
+    fi
+}
+
+stop() {
+    updatepid
+    if [ ! -z $PID ] ; then
+        kill $PID
+        return $?
+    fi
+}
+
+status() {
+    updatepid
+    if [ ! -z $PID ] ; then
+        echo "$service is running."
+        exit 0
+    else
+        echo "$service is not running."
+        exit 3
+    fi
 }
 
 case "$1" in
-        start)
-                do_start
-                ;;
-        stop)
-                do_stop
-                ;;
-        restart)
-                do_stop
-                do_start
-                ;;
-        *)
-                echo "Usage: $0 {start|stop|restart}"
-                RETVAL=1
+    start)
+        $1
+        ;;
+    stop)
+        $1
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    status)
+        $1
+        ;;
+    *)
+        echo "Usage: $SELF start|stop|restart|status"
+        exit 1
+    ;;
 esac
-
-exit $RETVAL
