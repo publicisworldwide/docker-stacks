@@ -44,7 +44,7 @@ RUN yum-config-manager --enable ol7_optional_latest && \
 ## acceptance test tools
 
 # Setup (dev) - tools
-RUN yum install -y tree make which curl GraphicsMagick ghostscript && \
+RUN yum install -y tree make which curl GraphicsMagick ghostscript gtk3 xorg-x11-server-Xvfb && \
     yum clean all
 
 # Acceptance user
@@ -74,7 +74,6 @@ RUN cd /opt && \
 
 # Prepare Selenium & Firefox headless environment
 RUN version_selenium_short=$(echo ${version_selenium} | cut -d\. -f1-2) && \
-    yum install -y links xorg-x11-server-Xvfb firefox dconf dconf-editor && \
     mkdir -p /opt/selenium-server && \
     cd /opt/selenium-server && \
     wget https://selenium-release.storage.googleapis.com/${version_selenium_short}/selenium-server-standalone-${version_selenium}.jar && \
