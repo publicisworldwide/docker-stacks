@@ -131,7 +131,7 @@ RUN mkdir -p /jenkins.workspace/dir-project && \
 ##########################################################################
 ## init scripts
 
-ENV SERVICES "phantomjs selenium Xvfb mariadb httpd"
+ENV SERVICES "phantomjs selenium mariadb httpd"
 
 COPY /conf.files/etc/init.d/* /etc/init.d/
 RUN for i in ${SERVICES} ; do chmod -v +x /etc/init.d/"$i" ; done
