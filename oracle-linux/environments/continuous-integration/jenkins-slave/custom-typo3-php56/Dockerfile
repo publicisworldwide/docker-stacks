@@ -4,12 +4,14 @@ MAINTAINER "Heiko Hardt" <heiko.hardt@publicispixelpark.de>
 ENV container docker
 ENV version_phantomjs 2.1.1
 ENV version_selenium 2.53.1
+ENV version_firefox 46.0.1
 ENV SYSTEMCTL_SKIP_REDIRECT foo
 
 ##########################################################################
 ## publicis standard setup
 
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+      bzip2 \
       java-1.7.0-openjdk \
       git \
       wget \
@@ -47,6 +49,20 @@ RUN yum install -y tree make which curl GraphicsMagick ghostscript && \
 
 # Acceptance user
 RUN adduser screener
+
+# Firefox
+RUN cd /opt && \
+    # get and extract binaries
+    wget https://ftp.mozilla.org/pub/firefox/releases/${version_firefox}/linux-x86_64/de/firefox-${version_firefox}.tar.bz2 && \
+    tar xvjf firefox-${version_firefox}.tar.bz2 && \
+    rm -f firefox-${version_firefox}.tar.bz2 && \
+    mv firefox firefox.${version_firefox} && \
+    # setup symlink
+    ln -s /opt/firefox.${version_firefox}/firefox /usr/local/bin/ && \
+    # adjust permissions
+    chmod +x /usr/local/bin/firefox && \
+    chown -R screener:screener /opt/firefox.${version_firefox} && \
+    chown -R screener:screener /usr/local/bin/firefox
 
 # Phantomjs
 RUN cd /opt && \
