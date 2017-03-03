@@ -1,0 +1,60 @@
+#!/bin/sh
+
+#
+# chkconfig: 35 99 99
+# description: Script for starting mariadb.
+#
+
+. /etc/rc.d/init.d/functions
+
+USER="mysql"
+DAEMON="/usr/bin/mysqld_safe --basedir=/usr"
+LOG_FILE="/var/log/mariadb/mariadb.log"
+
+do_start()
+{
+        echo -n $"Starting MariaDB : "
+        mkdir -p /var/run/mariadb
+        chown -R "$USER": /var/run/mariadb
+        /usr/libexec/mariadb-prepare-db-dir mariadb.service  >> $LOG_FILE 2>&1 && echo_success || echo_failure
+        runuser -s /bin/sh -l "$USER" -c "$DAEMON >> $LOG_FILE &" && echo_success || echo_failure
+        RETVAL=$?
+	echo
+        [ $RETVAL -eq 0 ]
+}
+
+do_stop()
+{
+        echo -n $"Stopping MariaDB : "
+        pid=$(cat /var/run/mariadb/mariadb.pid)
+        kill -9 $pid > /dev/null 2>&1 && echo_success || echo_failure
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ]
+}
+
+do_status()
+{
+        ps --no-headers -u "$USER"
+}
+
+case "$1" in
+        start)
+                do_start
+                ;;
+        stop)
+                do_stop
+                ;;
+        restart)
+                do_stop
+                do_start
+                ;;
+        status)
+                do_status
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart|status}"
+                RETVAL=1
+esac
+
+exit $RETVAL
