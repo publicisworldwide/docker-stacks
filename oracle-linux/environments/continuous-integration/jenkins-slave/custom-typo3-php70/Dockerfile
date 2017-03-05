@@ -13,6 +13,7 @@ ENV SYSTEMCTL_SKIP_REDIRECT foo
 
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
         bzip2 \
+        unzip \
         git \
         wget \
         java-1.8.0-openjdk \
