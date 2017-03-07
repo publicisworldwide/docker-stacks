@@ -1,0 +1,77 @@
+#!/bin/bash
+#
+# chkconfig:   - 85 15
+# description: phantomjs
+# processname: phantomjs
+#
+
+# service
+service="phantomjs"
+
+# logfiles
+std_log=/var/log/phantomjs/phantomjs_std.log
+err_log=/var/log/phantomjs/phantomjs_error.log
+
+# binaries & options
+binary="/usr/local/bin/phantomjs"
+option="--webdriver=8643"
+
+# run as
+user="screener"
+
+# process-id
+PID=""
+
+updatepid(){
+    PID=$(ps -C phantomjs -o pid,cmd | grep $binary | awk {'print $1'})
+    echo "$binary (PID:$PID)"
+}
+
+start() {
+    updatepid
+    if [ ! -z $PID ] ; then
+        echo "$service is already running."
+        exit 1
+    else
+        su $user -c "$binary $option >$std_log 2>$err_log &"
+    fi
+}
+
+stop() {
+    updatepid
+    if [ ! -z $PID ] ; then
+        kill $PID
+        return $?
+    fi
+}
+
+status() {
+    updatepid
+    if [ ! -z $PID ] ; then
+        echo "$service is running."
+        exit 0
+    else
+        echo "$service is not running."
+        exit 3
+    fi
+}
+
+case "$1" in
+    start)
+        $1
+        ;;
+    stop)
+        $1
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    status)
+        $1
+        ;;
+    *)
+        echo "Usage: $SELF start|stop|restart|status"
+        exit 1
+    ;;
+esac
