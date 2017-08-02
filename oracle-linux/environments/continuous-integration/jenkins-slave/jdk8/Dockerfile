@@ -11,5 +11,5 @@ RUN /bin/wget http://archive.apache.org/dist/maven/maven-3/${mvn_version}/binari
     ln -s /opt/apache-maven-${mvn_version}/bin/mvn /usr/bin/mvn && \
     rm -fv ${mvn_tmp_file}
 
-RUN /usr/bin/yum install -y java-1.8.0-openjdk-devel java-1.8.0-openjdk-headless && \
+RUN /usr/bin/yum install -y java-1.8.0-openjdk-devel && \
     /usr/bin/yum clean all
