@@ -9,7 +9,7 @@ RUN yum install -y java-1.8.0-openjdk-headless \
       wget \
       pv \
       yum-plugin-ovl && \
+    yum group install -y "Development Tools" && \
     yum clean all
-RUN yum group install -y "Development Tools" && \
-    yum clean all
+RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN mkdir -pv /jenkins
