@@ -15,3 +15,5 @@ Clean up your local registry (only 'none)
 ```
 docker rmi `docker images | grep '^<none>' | awk '{print $3}'`
 ```
+
+
