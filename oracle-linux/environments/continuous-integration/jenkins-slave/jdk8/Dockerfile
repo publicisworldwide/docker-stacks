@@ -12,4 +12,5 @@ RUN /bin/wget http://archive.apache.org/dist/maven/maven-3/${mvn_version}/binari
     rm -fv ${mvn_tmp_file}
 
 RUN /usr/bin/yum install -y java-1.8.0-openjdk-devel && \
+    /usr/bin/yum install -y fontconfig && \
     /usr/bin/yum clean all
